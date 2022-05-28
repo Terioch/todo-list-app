@@ -6,7 +6,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h1 class="fs-2 fw-light">Track your current tasks</h1>
+        <h1 class="fs-3 fw-light">Track your current tasks</h1>
         <a asp-controller="Home" asp-action="Create">Create New</a>
     </div>
 
@@ -31,9 +31,11 @@
                         </div>
                         <div>
                             <small class="text-secondary">@item.CreatedAt.ToString("dd/MM/yyyy")</small>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger">Delete</a>
                             <p>@item.Text</p>
                         </div>
-                    </li>
+                    </li>                  
                 }
             </ul>
         }

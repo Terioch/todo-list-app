@@ -7,7 +7,7 @@ namespace TodoListApp.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required]        
         public string Text { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }

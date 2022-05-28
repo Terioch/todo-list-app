@@ -1,0 +1,21 @@
+Inheritance allows a derived class to inherit all non-private members from a base class.
+A derived class can only inherit from a single base class.
+Inheritance is also multi-level in the sense that a derived class can inherit from a base class that inherits from another base class.
+
+Interfaces allow methods to be defined without implementation, which must then be implemented by the derived class.
+A class may implement multiple interfaces.
+
+All collections implement the IEnumerable interface.
+Lists implement other interfaces on top of IEnumerable that allow for add and delete operations which manipulate the collection size.
+Lists are read into memory as an entire collection at once and its elements can be accessed via indexing.
+Enumerables are read into memory one item at a time, have a fixed size and its elements cannot be accessed via indexing.
+
+HTTP (Hypertext Transfer Protcol) is a protocol or set of rules that must be followed when a browser sends a request to a server.
+HTTP GET - Indicates that this is a request to fetch data from the server.
+HTTP POST - Indicates that this is a request that posts data to the server.
+Other HTTP request types include PUT, PATCH and DELETE.
+Most web applications follow the CRUD pattern which implies that they perform the create, read, update and delete operations. 
+
+The static modifier prefixed to a variable implies that it will only be initialized once throughout our entire system and its value will persist in-memory.
+This modifier can also be applied to methods, classes and various other C# strucures.
+
