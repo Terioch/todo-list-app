@@ -5,9 +5,24 @@ namespace TodoListApp.Models
 {
     public class TodoItem
     {
+        /*private readonly int id;
+
+        public int Id 
+        { 
+            get
+            {
+                return id;
+            } 
+            set
+            {
+                id = value;
+            } 
+        }*/
+
         public int Id { get; set; }
 
-        [Required]        
+        [Required(ErrorMessage = "Text must not be empty")]
+        [StringLength(10, MinimumLength = 3, ErrorMessage = "Text must be at least 3 characters but no more than 10 characters")]
         public string Text { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }

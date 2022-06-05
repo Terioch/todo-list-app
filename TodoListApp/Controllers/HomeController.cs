@@ -6,23 +6,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoListApp.Models;
+using TodoListApp.Repositories;
 
 namespace TodoListApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private static readonly List<TodoItem> _todoItems = new List<TodoItem>();
+        // private static readonly List<TodoItem> _todoItems = new List<TodoItem>();
+        private readonly MockTodoItemRepository _todoItemStore;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _todoItemStore = new MockTodoItemRepository(); // Create new instance of item data access class
         }
 
-
         public IActionResult Index()
-        {            
-            return View(_todoItems);
+        {  
+            return View(_todoItemStore.GetAll());
         }
 
         [HttpGet]
@@ -41,8 +43,8 @@ namespace TodoListApp.Controllers
                 CreatedAt = DateTimeOffset.Now,
                 IsCompleted = false
             };
-
-            _todoItems.Add(item);
+            
+            _todoItemStore.Add(item);
 
             return RedirectToAction("Index", "Home");
         }
@@ -50,26 +52,25 @@ namespace TodoListApp.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var item = _todoItems.FirstOrDefault(x => x.Id == id); // Get first item with a matching id
+            var items = _todoItemStore.GetAll();
+
+            var item = items.FirstOrDefault(x => x.Id == id); // Get first item with a matching id
+
+            if (item == null)
+            {
+                ViewBag.ErrorMessage = $"An item with the id { id } was not found";
+                return View("NotFound");
+            }
 
             return View(item);
         }
 
         [HttpPost]
         public IActionResult Edit(TodoItem model)
-        {
-            // Alternative way to get original item with matching id using a for loop
-            TodoItem originalItem = new TodoItem();
+        {            
+            var items = _todoItemStore.GetAll(); // Fetch items from mock repository (data access layer)
 
-            for (int i = 0; i < _todoItems.Count(); i++)
-            {
-                if (_todoItems[i].Id == model.Id)
-                {
-                    originalItem = _todoItems[i];
-                }
-            }
-
-            // var originalItem = _todoItems.FirstOrDefault(x => x.Id == model.Id);
+            var originalItem = items.FirstOrDefault(x => x.Id == model.Id);
 
             var newItem = new TodoItem
             {
@@ -79,9 +80,20 @@ namespace TodoListApp.Controllers
                 IsCompleted = model.IsCompleted
             };
 
-            int index = _todoItems.IndexOf(originalItem); // Get the index of this item within the collection
+            int index = items.IndexOf(originalItem); // Get the index of this item within the collection
 
-            _todoItems[index] = newItem; // Access this item via indexing and assign our new item
+            items[index] = newItem; // Access this item by its index and assign our new item
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var items = _todoItemStore.GetAll();
+
+            var item = items.FirstOrDefault(x => x.Id == id);
+
+            items.Remove(item);
 
             return RedirectToAction("Index", "Home");
         }

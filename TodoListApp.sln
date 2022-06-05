@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LessonNotes", "LessonNotes", "{1454FF5D-E9E4-4AFA-8D20-C50FE5EBD7D5}"
 	ProjectSection(SolutionItems) = preProject
 		Lesson2.txt = Lesson2.txt
+		Lesson3.txt = Lesson3.txt
 	EndProjectSection
 EndProject
 Global

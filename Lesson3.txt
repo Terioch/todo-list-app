@@ -1,0 +1,29 @@
+Typical website pattern:
+Database --> Server --> Webpage
+
+MVC pattern:
+Data Layer (Database) --> Model Layer --> Controller Layer --> View Layer
+
+MVC pattern with additional abstraction layer for data access:
+Data Layer (Database) --> Data Access Layer --> Model Layer --> Controller Layer --> View Layer
+
+Constructors are methods of a class that are called whenever a new instance (object) of that class is created.
+
+The ViewBag is an object accessible within controller classes that can define dynamic properties which are then passed to the view.
+
+Ternaray operator follows the if else pattern:
+
+int num = 5;
+
+if (num == 5)
+{
+	num++;
+}
+else 
+{
+	num--;
+}
+
+is equivalent to
+
+num == 5 ? num++ : num--; 
