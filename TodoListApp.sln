@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LessonNotes", "LessonNotes"
 	ProjectSection(SolutionItems) = preProject
 		Lesson2.txt = Lesson2.txt
 		Lesson3.txt = Lesson3.txt
+		Lesson4.txt = Lesson4.txt
 	EndProjectSection
 EndProject
 Global

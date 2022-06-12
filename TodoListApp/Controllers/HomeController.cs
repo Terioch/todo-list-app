@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using TodoListApp.Contexts;
 using TodoListApp.Models;
 using TodoListApp.Repositories;
 
@@ -13,13 +14,13 @@ namespace TodoListApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        // private static readonly List<TodoItem> _todoItems = new List<TodoItem>();
-        private readonly MockTodoItemRepository _todoItemStore;
+        private readonly MockTodoItemRepository _todoItemStore;        
+
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _todoItemStore = new MockTodoItemRepository(); // Create new instance of item data access class
+            _todoItemStore = new MockTodoItemRepository();
         }
 
         public IActionResult Index()
@@ -44,7 +45,7 @@ namespace TodoListApp.Controllers
                 IsCompleted = false
             };
             
-            _todoItemStore.Add(item);
+            _todoItemStore.Add(item);            
 
             return RedirectToAction("Index", "Home");
         }
@@ -54,7 +55,7 @@ namespace TodoListApp.Controllers
         {
             var items = _todoItemStore.GetAll();
 
-            var item = items.FirstOrDefault(x => x.Id == id); // Get first item with a matching id
+            var item = items.FirstOrDefault(x => x.Id == id);
 
             if (item == null)
             {
@@ -68,32 +69,22 @@ namespace TodoListApp.Controllers
         [HttpPost]
         public IActionResult Edit(TodoItem model)
         {            
-            var items = _todoItemStore.GetAll(); // Fetch items from mock repository (data access layer)
-
-            var originalItem = items.FirstOrDefault(x => x.Id == model.Id);
-
-            var newItem = new TodoItem
-            {
-                Id = originalItem.Id,
-                Text = model.Text,
-                CreatedAt = originalItem.CreatedAt,
-                IsCompleted = model.IsCompleted
-            };
-
-            int index = items.IndexOf(originalItem); // Get the index of this item within the collection
-
-            items[index] = newItem; // Access this item by its index and assign our new item
+            _todoItemStore.Update(model);
 
             return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Delete(int id)
         {
-            var items = _todoItemStore.GetAll();
+            var item = _todoItemStore.Get(id);
 
-            var item = items.FirstOrDefault(x => x.Id == id);
+            if (item == null)
+            {
+                ViewBag.ErrorMessage = $"An item with the id { id } was not found";
+                return View("NotFound");
+            }
 
-            items.Remove(item);
+            _todoItemStore.Delete(item);
 
             return RedirectToAction("Index", "Home");
         }

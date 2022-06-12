@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TodoListApp.Models;
 
 namespace TodoListApp.Repositories
 {
     public class MockTodoItemRepository
     {
-        private static readonly List<TodoItem> _todoItems = new List<TodoItem>();
+        private static readonly List<TodoItem> _todoItems = new List<TodoItem>();        
 
-        public List<TodoItem> GetAll()
-        {
+        public IEnumerable<TodoItem> GetAll()
+        {           
             return _todoItems;
+        }
+
+        public TodoItem Get(int id)
+        {
+            return _todoItems.FirstOrDefault(x => x.Id == id);
         }
 
         public void Add(TodoItem item)
@@ -20,12 +26,14 @@ namespace TodoListApp.Repositories
 
         public void Update(TodoItem item)
         {
-            throw new NotImplementedException();
+            var originalItem = Get(item.Id);
+            originalItem.Text = item.Text;
+            originalItem.IsCompleted = item.IsCompleted;
         }
 
-        public void Delete(int id)
+        public void Delete(TodoItem item)
         {
-            throw new NotImplementedException();
+            _todoItems.Remove(item);
         }
     }
 }

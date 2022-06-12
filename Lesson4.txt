@@ -1,0 +1,29 @@
+Linq methods allow use to perform read operations on collections in a more concise manner compared to using loops.
+
+Relational Database - Stores data in the form of tables. 
+Each table represents a single entity model/class.
+Each table row correponds to a unique instance of that class.
+Each table column corresponds to a single property within that entity.
+
+Table - TodoItems
+
+Id | Text | CreatedAt | IsCompleted 
+1  | hi   | 20/09/20  | false
+2  | new  | 19/06/12  | true
+
+SQL - Structured Query Language
+Used to query/interact with relational databases in the form of SQL statements.
+For example: SELECT * from TodoItems; selects all rows and columns from the TodoItems table.
+Types of statements include SELECT (read data), INSERT (insert new data), SET (update existing data) and DELETE (remove data)
+
+Entity Framework - Object Relational Mapper
+Configures the process of mapping/translating classes to tables in our database.
+Also configures the process of mapping/translating instances/objects of classes to new rows within tables in our database.
+For example, our TodoItem class will initially be mapped onto a new table referred to as TodoItems.
+After that, any new instances of the TodoItem class will be mapped onto new rows within that table.
+The full mapping process ocurrs behind the scenes and is abstracted away by Entity Framework.
+We merely interact with and manipulate collections of objects in-memory that will then be automatically translated to database queries.
+
+Dependency injection describes the process of injecting an instance/object of a class into an other class that depends on it.
+The objects being injected are often referred to as services that are being registered.
+Upon application startup, each service is instantiated and can then be freely injected into the constructors of other classes, removing the need to instantiate these classes ourselves.
