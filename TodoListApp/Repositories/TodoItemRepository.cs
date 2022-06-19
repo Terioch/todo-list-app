@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TodoListApp.Contexts;
 using TodoListApp.Models;
 
 namespace TodoListApp.Repositories
 {
-    public class TodoItemRepository
+    public class TodoItemRepository : ITodoItemRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -21,22 +22,27 @@ namespace TodoListApp.Repositories
 
         public TodoItem Get(int id)
         {
-            throw new NotImplementedException();
+            return _db.TodoItems.FirstOrDefault(x => x.Id == id);
         }
 
         public void Add(TodoItem item)
         {
-            throw new NotImplementedException();
+            _db.TodoItems.Add(item);
+            _db.SaveChanges();
         }
 
         public void Update(TodoItem item)
         {
-            throw new NotImplementedException();
+            var originalItem = Get(item.Id);
+            originalItem.Text = item.Text;
+            originalItem.IsCompleted = item.IsCompleted;
+            _db.SaveChanges();
         }
 
         public void Delete(TodoItem item)
         {
-            throw new NotImplementedException();
-        }
+            _db.TodoItems.Remove(item);
+            _db.SaveChanges();
+        }        
     }
 }

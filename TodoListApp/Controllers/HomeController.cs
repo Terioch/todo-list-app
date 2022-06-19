@@ -14,13 +14,12 @@ namespace TodoListApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly MockTodoItemRepository _todoItemStore;        
+        private readonly ITodoItemRepository _todoItemStore;
 
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ITodoItemRepository todoItemStore)
         {
             _logger = logger;
-            _todoItemStore = new MockTodoItemRepository();
+            _todoItemStore = todoItemStore;
         }
 
         public IActionResult Index()
@@ -38,14 +37,14 @@ namespace TodoListApp.Controllers
         public IActionResult Create(TodoItem model)
         {
             var item = new TodoItem
-            {
-                Id = new Random().Next(),
+            {                
                 Text = model.Text,
+                Price = model.Price,               
                 CreatedAt = DateTimeOffset.Now,
                 IsCompleted = false
             };
             
-            _todoItemStore.Add(item);            
+            _todoItemStore.Add(item);                       
 
             return RedirectToAction("Index", "Home");
         }

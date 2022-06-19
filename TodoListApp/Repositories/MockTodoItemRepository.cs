@@ -5,7 +5,7 @@ using TodoListApp.Models;
 
 namespace TodoListApp.Repositories
 {
-    public class MockTodoItemRepository
+    public class MockTodoItemRepository : ITodoItemRepository
     {
         private static readonly List<TodoItem> _todoItems = new List<TodoItem>();        
 
@@ -21,6 +21,7 @@ namespace TodoListApp.Repositories
 
         public void Add(TodoItem item)
         {
+            item.Id = new Random().Next();
             _todoItems.Add(item);
         }
 

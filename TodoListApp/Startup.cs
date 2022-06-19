@@ -31,6 +31,7 @@ namespace TodoListApp
             {
                 options.UseSqlServer(Configuration.GetConnectionString("localSqlServerConnection"));
             });
+            services.AddTransient<ITodoItemRepository, MockTodoItemRepository>();                 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
