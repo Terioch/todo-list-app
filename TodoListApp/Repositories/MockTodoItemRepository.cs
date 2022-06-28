@@ -28,13 +28,20 @@ namespace TodoListApp.Repositories
         public void Update(TodoItem item)
         {
             var originalItem = Get(item.Id);
-            originalItem.Text = item.Text;
+            originalItem.Name = item.Name;
+            originalItem.Price = item.Price;
             originalItem.IsCompleted = item.IsCompleted;
         }
 
         public void Delete(TodoItem item)
         {
             _todoItems.Remove(item);
+        }
+
+        public void DeleteRange(IEnumerable<TodoItem> items)
+        {
+            //_todoItems.RemoveRange(items);
+            throw new NotImplementedException();
         }
     }
 }

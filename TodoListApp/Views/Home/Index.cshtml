@@ -7,11 +7,17 @@
 <div class="card">
     <div class="card-header">
         <h1 class="fs-3 fw-light">Track your current tasks</h1>
-        <a asp-controller="Home" asp-action="Create">Create New</a>
-        <a>Clear all</a>
+        <a asp-controller="Home" asp-action="Create">Create</a> |
+        <a class="text-danger" asp-action="DeleteAll" onclick="return confirm('Are you sure you want to delete all tasks in the system?')">Clear All</a>
     </div>
 
     <div class="card-body">
+        <form asp-action="Search">
+            <input class="form-input" name="searchTerm" placeholder="Search by Name" type="text" />         
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>            
+        <hr />
+
         @if (!Model.Any())
         {
             <div class="alert alert-secondary">
@@ -34,7 +40,7 @@
                             <small class="text-secondary">@item.CreatedAt.ToString("dd/MM/yyyy")</small>
                             <a asp-action="Edit" asp-route-id="@item.Id" class="">Edit</a>
                             <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger" onclick="return confirm('Are you sure you want delete this task?')">Delete</a>
-                            <p>@item.Text - @item.PriceString</p>                      
+                            <p>@item.Name - @item.PriceString</p>                      
                         </div>
                     </li>                  
                 }

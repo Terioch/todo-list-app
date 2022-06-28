@@ -34,7 +34,8 @@ namespace TodoListApp.Repositories
         public void Update(TodoItem item)
         {
             var originalItem = Get(item.Id);
-            originalItem.Text = item.Text;
+            originalItem.Name = item.Name;
+            originalItem.Price = item.Price;
             originalItem.IsCompleted = item.IsCompleted;
             _db.SaveChanges();
         }
@@ -43,6 +44,12 @@ namespace TodoListApp.Repositories
         {
             _db.TodoItems.Remove(item);
             _db.SaveChanges();
-        }        
+        }
+
+        public void DeleteRange(IEnumerable<TodoItem> items)
+        {
+            _db.TodoItems.RemoveRange(items);
+            _db.SaveChanges();
+        }
     }
 }

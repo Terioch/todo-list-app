@@ -27,6 +27,20 @@ namespace TodoListApp.Controllers
             return View(_todoItemStore.GetAll());
         }
 
+        public IActionResult Search(string searchTerm)
+        {
+            var items = _todoItemStore.GetAll();
+
+            if (searchTerm == null)
+            {
+                return View("Index", items);            
+            }
+
+            var filteredItems = items.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
+
+            return View("Index", filteredItems);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -38,7 +52,7 @@ namespace TodoListApp.Controllers
         {
             var item = new TodoItem
             {                
-                Text = model.Text,
+                Name = model.Name,
                 Price = model.Price,               
                 CreatedAt = DateTimeOffset.Now,
                 IsCompleted = false
@@ -51,10 +65,8 @@ namespace TodoListApp.Controllers
 
         [HttpGet]
         public IActionResult Edit(int id)
-        {
-            var items = _todoItemStore.GetAll();
-
-            var item = items.FirstOrDefault(x => x.Id == id);
+        {                        
+            var item = _todoItemStore.Get(id);
 
             if (item == null)
             {
@@ -86,6 +98,20 @@ namespace TodoListApp.Controllers
             _todoItemStore.Delete(item);
 
             return RedirectToAction("Index", "Home");
+        }
+                
+        public IActionResult DeleteAll()
+        {
+            var items = _todoItemStore.GetAll();            
+
+            /*foreach (var item in items)
+            {
+                _todoItemStore.Delete(item);
+            }*/
+
+            _todoItemStore.DeleteRange(items);
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

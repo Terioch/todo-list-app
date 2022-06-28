@@ -10,5 +10,6 @@ namespace TodoListApp.Repositories
         void Add(TodoItem item);
         void Update(TodoItem item);
         void Delete(TodoItem item);
+        void DeleteRange(IEnumerable<TodoItem> items);
     }
 }
