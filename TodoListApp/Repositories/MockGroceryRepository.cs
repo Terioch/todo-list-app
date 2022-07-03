@@ -5,43 +5,43 @@ using TodoListApp.Models;
 
 namespace TodoListApp.Repositories
 {
-    public class MockTodoItemRepository : ITodoItemRepository
+    public class MockGroceryRepository : IGroceryRepository
     {
-        private static readonly List<TodoItem> _todoItems = new List<TodoItem>();        
+        private static readonly List<Grocery> _todoItems = new List<Grocery>();        
 
-        public IEnumerable<TodoItem> GetAll()
+        public IEnumerable<Grocery> GetAll()
         {           
             return _todoItems;
         }
 
-        public TodoItem Get(int id)
+        public Grocery Get(int id)
         {
             return _todoItems.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Add(TodoItem item)
+        public void Add(Grocery item)
         {
             item.Id = new Random().Next();
             _todoItems.Add(item);
         }
 
-        public void Update(TodoItem item)
+        public void Update(Grocery item)
         {
             var originalItem = Get(item.Id);
             originalItem.Name = item.Name;
             originalItem.Price = item.Price;
+            originalItem.Category = item.Category;
             originalItem.IsCompleted = item.IsCompleted;
         }
 
-        public void Delete(TodoItem item)
+        public void Delete(Grocery item)
         {
             _todoItems.Remove(item);
         }
 
-        public void DeleteRange(IEnumerable<TodoItem> items)
+        public void DeleteRange(IEnumerable<Grocery> items)
         {
-            //_todoItems.RemoveRange(items);
-            throw new NotImplementedException();
+            _todoItems.RemoveRange(0, items.Count());
         }
     }
 }

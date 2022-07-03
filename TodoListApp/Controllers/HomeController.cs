@@ -14,9 +14,9 @@ namespace TodoListApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ITodoItemRepository _todoItemStore;
+        private readonly IGroceryRepository _todoItemStore;
 
-        public HomeController(ILogger<HomeController> logger, ITodoItemRepository todoItemStore)
+        public HomeController(ILogger<HomeController> logger, IGroceryRepository todoItemStore)
         {
             _logger = logger;
             _todoItemStore = todoItemStore;
@@ -32,7 +32,7 @@ namespace TodoListApp.Controllers
             var items = _todoItemStore.GetAll();
 
             if (searchTerm == null)
-            {
+            {               
                 return View("Index", items);            
             }
 
@@ -48,12 +48,13 @@ namespace TodoListApp.Controllers
         }    
         
         [HttpPost]
-        public IActionResult Create(TodoItem model)
+        public IActionResult Create(Grocery model)
         {
-            var item = new TodoItem
+            var item = new Grocery
             {                
                 Name = model.Name,
-                Price = model.Price,               
+                Price = model.Price,  
+                Category = model.Category,
                 CreatedAt = DateTimeOffset.Now,
                 IsCompleted = false
             };
@@ -78,7 +79,7 @@ namespace TodoListApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(TodoItem model)
+        public IActionResult Edit(Grocery model)
         {            
             _todoItemStore.Update(model);
 

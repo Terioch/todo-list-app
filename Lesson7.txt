@@ -1,0 +1,14 @@
+Table - GroceryItems
+
+Id | CategoryId | Text  | CreatedAt | IsCompleted 
+1  | 	 2		| Steak | 20/09/20  | false
+2  | 	 1		| Apple | 19/06/12  | true
+
+Table - Categories
+
+Id | Name
+1  | Fruit
+2  | Meat
+
+Each CategoryId in the TodoItems table is a foreign key that references a primary key in the Categories table.
+With this foreign key reference, Entity Framework is able to retrieve the entire row of data for that CategoryId.

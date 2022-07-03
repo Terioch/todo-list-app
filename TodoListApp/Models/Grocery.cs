@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TodoListApp.Models
 {
-    public class TodoItem
+    public class Grocery
     {
         /*private readonly int id;
 
@@ -22,14 +22,25 @@ namespace TodoListApp.Models
 
         public int Id { get; set; }
 
+        public int CategoryId { get; set; }
+
         [Required]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "Name must be at least 3 characters but no more than 10 characters")]
         public string Name { get; set; }
 
         [Required]
-        public decimal Price { get; set; }        
+        public decimal Price { get; set; }                
 
         public DateTimeOffset CreatedAt { get; set; }
+
+        [NotMapped]
+        public string CreatedAtString
+        {
+            get
+            {
+                return CreatedAt.ToString("dd/MM/yyyy");
+            }
+        }
 
         public bool IsCompleted { get; set; }
 
@@ -41,5 +52,8 @@ namespace TodoListApp.Models
                 return $"${ Price }";
             }
         }
+
+        // Navigation Property
+        public virtual Category Category { get; set; }
     }
 }

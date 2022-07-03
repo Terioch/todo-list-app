@@ -1,7 +1,8 @@
-﻿@model IEnumerable<TodoItem>
+﻿@model IEnumerable<Grocery>
 
 @{
     ViewData["Title"] = "Home Page";
+    int count = 1;
 }
 
 <div class="card">
@@ -25,7 +26,32 @@
             </div>
         } else
         {
-            <ul class="list-group list-group-flush">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Date Created</th>
+                    </tr>
+                </thead>
+                <tbody>                                        
+                    @foreach (var item in Model)
+                    {
+                        <tr>                  
+                            <th scope="row">@count</th>
+                            <td>@item.Name</td>
+                            <td>@item.Category</td>
+                            <td>@item.PriceString</td>
+                            <td>@item.CreatedAtString</td>
+                        </tr>
+
+                        count++;
+                    }                                
+              </tbody>
+            </table>
+            @*<ul class="list-group list-group-flush">
                 @foreach (var item in Model)
                 {
                     <li class="list-group-item d-flex">
@@ -37,14 +63,15 @@
                             </div>                    
                         </div>
                         <div>
-                            <small class="text-secondary">@item.CreatedAt.ToString("dd/MM/yyyy")</small>
+                            <small class="text-secondary">@item.CreatedAtString</small>
                             <a asp-action="Edit" asp-route-id="@item.Id" class="">Edit</a>
                             <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger" onclick="return confirm('Are you sure you want delete this task?')">Delete</a>
-                            <p>@item.Name - @item.PriceString</p>                      
+                            <p>@item.Name - @item.PriceString</p>
+                            <p>@item.Category</p>
                         </div>
                     </li>                  
                 }
-            </ul>
+            </ul>*@
         }
     </div>
 </div>

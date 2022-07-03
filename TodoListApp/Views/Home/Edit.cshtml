@@ -1,4 +1,4 @@
-﻿@model TodoItem
+﻿@model Grocery
 
 @{
     ViewData["Title"] = "Edit";
@@ -20,6 +20,11 @@
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" type="number" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group form-check mb-3">
                 <label class="form-check-label">

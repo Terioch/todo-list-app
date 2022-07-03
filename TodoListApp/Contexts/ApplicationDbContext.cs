@@ -11,6 +11,8 @@ namespace TodoListApp.Contexts
             
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<Grocery> Groceries { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }

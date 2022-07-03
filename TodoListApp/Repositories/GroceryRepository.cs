@@ -6,49 +6,50 @@ using TodoListApp.Models;
 
 namespace TodoListApp.Repositories
 {
-    public class TodoItemRepository : ITodoItemRepository
+    public class GroceryRepository : IGroceryRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public TodoItemRepository(ApplicationDbContext db)
+        public GroceryRepository(ApplicationDbContext db)
         {
             _db = db;           
         }
 
-        public IEnumerable<TodoItem> GetAll()
+        public IEnumerable<Grocery> GetAll()
         {
-            return _db.TodoItems;
+            return _db.Groceries;
         }
 
-        public TodoItem Get(int id)
+        public Grocery Get(int id)
         {
-            return _db.TodoItems.FirstOrDefault(x => x.Id == id);
+            return _db.Groceries.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Add(TodoItem item)
+        public void Add(Grocery item)
         {
-            _db.TodoItems.Add(item);
+            _db.Groceries.Add(item);
             _db.SaveChanges();
         }
 
-        public void Update(TodoItem item)
+        public void Update(Grocery item)
         {
             var originalItem = Get(item.Id);
             originalItem.Name = item.Name;
             originalItem.Price = item.Price;
+            originalItem.Category = item.Category;
             originalItem.IsCompleted = item.IsCompleted;
             _db.SaveChanges();
         }
 
-        public void Delete(TodoItem item)
+        public void Delete(Grocery item)
         {
-            _db.TodoItems.Remove(item);
+            _db.Groceries.Remove(item);
             _db.SaveChanges();
         }
 
-        public void DeleteRange(IEnumerable<TodoItem> items)
+        public void DeleteRange(IEnumerable<Grocery> items)
         {
-            _db.TodoItems.RemoveRange(items);
+            _db.Groceries.RemoveRange(items);
             _db.SaveChanges();
         }
     }
