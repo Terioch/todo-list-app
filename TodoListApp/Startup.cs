@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoListApp.Contexts;
+using TodoListApp.Models;
 using TodoListApp.Repositories;
 
 namespace TodoListApp
@@ -31,7 +32,8 @@ namespace TodoListApp
             {
                 options.UseSqlServer(Configuration.GetConnectionString("localSqlServerConnection"));
             });
-            services.AddTransient<IGroceryRepository, GroceryRepository>();                 
+            services.AddTransient<IRepository<Grocery>, GroceryRepository>();
+            services.AddTransient<IRepository<Category>, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

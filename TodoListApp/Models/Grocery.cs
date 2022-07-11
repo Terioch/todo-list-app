@@ -29,9 +29,9 @@ namespace TodoListApp.Models
         public string Name { get; set; }
 
         [Required]
-        public decimal Price { get; set; }                
+        public decimal Price { get; set; }
 
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }        
 
         [NotMapped]
         public string CreatedAtString

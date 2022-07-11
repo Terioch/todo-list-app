@@ -6,7 +6,7 @@ using TodoListApp.Models;
 
 namespace TodoListApp.Repositories
 {
-    public class GroceryRepository : IGroceryRepository
+    public class GroceryRepository : IRepository<Grocery>
     {
         private readonly ApplicationDbContext _db;
 
@@ -34,9 +34,9 @@ namespace TodoListApp.Repositories
         public void Update(Grocery item)
         {
             var originalItem = Get(item.Id);
+            originalItem.CategoryId = item.CategoryId;
             originalItem.Name = item.Name;
-            originalItem.Price = item.Price;
-            originalItem.Category = item.Category;
+            originalItem.Price = item.Price;            
             originalItem.IsCompleted = item.IsCompleted;
             _db.SaveChanges();
         }

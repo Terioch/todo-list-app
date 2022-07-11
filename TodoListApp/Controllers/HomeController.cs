@@ -14,22 +14,22 @@ namespace TodoListApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IGroceryRepository _todoItemStore;
+        private readonly IRepository<Grocery> _groceryStore;
 
-        public HomeController(ILogger<HomeController> logger, IGroceryRepository todoItemStore)
+        public HomeController(ILogger<HomeController> logger, IRepository<Grocery> groceryStore)
         {
             _logger = logger;
-            _todoItemStore = todoItemStore;
+            _groceryStore = groceryStore;
         }
 
         public IActionResult Index()
         {  
-            return View(_todoItemStore.GetAll());
+            return View(_groceryStore.GetAll());
         }
 
         public IActionResult Search(string searchTerm)
         {
-            var items = _todoItemStore.GetAll();
+            var items = _groceryStore.GetAll();
 
             if (searchTerm == null)
             {               
@@ -52,14 +52,14 @@ namespace TodoListApp.Controllers
         {
             var item = new Grocery
             {                
+                CategoryId = model.CategoryId,
                 Name = model.Name,
-                Price = model.Price,  
-                Category = model.Category,
+                Price = model.Price,                  
                 CreatedAt = DateTimeOffset.Now,
                 IsCompleted = false
             };
             
-            _todoItemStore.Add(item);                       
+            _groceryStore.Add(item);                       
 
             return RedirectToAction("Index", "Home");
         }
@@ -67,7 +67,7 @@ namespace TodoListApp.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {                        
-            var item = _todoItemStore.Get(id);
+            var item = _groceryStore.Get(id);
 
             if (item == null)
             {
@@ -81,14 +81,14 @@ namespace TodoListApp.Controllers
         [HttpPost]
         public IActionResult Edit(Grocery model)
         {            
-            _todoItemStore.Update(model);
+            _groceryStore.Update(model);
 
             return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Delete(int id)
         {
-            var item = _todoItemStore.Get(id);
+            var item = _groceryStore.Get(id);
 
             if (item == null)
             {
@@ -96,21 +96,21 @@ namespace TodoListApp.Controllers
                 return View("NotFound");
             }
 
-            _todoItemStore.Delete(item);
+            _groceryStore.Delete(item);
 
             return RedirectToAction("Index", "Home");
         }
                 
         public IActionResult DeleteAll()
         {
-            var items = _todoItemStore.GetAll();            
+            var items = _groceryStore.GetAll();            
 
             /*foreach (var item in items)
             {
                 _todoItemStore.Delete(item);
             }*/
 
-            _todoItemStore.DeleteRange(items);
+            _groceryStore.DeleteRange(items);
 
             return RedirectToAction("Index");
         }

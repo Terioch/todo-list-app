@@ -10,8 +10,8 @@ using TodoListApp.Contexts;
 namespace TodoListApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220702072836_add_category_to_todoItem")]
-    partial class add_category_to_todoItem
+    [Migration("20220709071213_initial_create")]
+    partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,15 +21,34 @@ namespace TodoListApp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TodoListApp.Models.TodoItem", b =>
+            modelBuilder.Entity("TodoListApp.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Category")
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("TodoListApp.Models.Grocery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
@@ -47,7 +66,25 @@ namespace TodoListApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoItems");
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Groceries");
+                });
+
+            modelBuilder.Entity("TodoListApp.Models.Grocery", b =>
+                {
+                    b.HasOne("TodoListApp.Models.Category", "Category")
+                        .WithMany("GroceryItems")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("TodoListApp.Models.Category", b =>
+                {
+                    b.Navigation("GroceryItems");
                 });
 #pragma warning restore 612, 618
         }
