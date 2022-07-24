@@ -15,11 +15,13 @@ namespace TodoListApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository<Grocery> _groceryStore;
+        private readonly IRepository<Category> _categoryStore;
 
-        public HomeController(ILogger<HomeController> logger, IRepository<Grocery> groceryStore)
+        public HomeController(ILogger<HomeController> logger, IRepository<Grocery> groceryStore, IRepository<Category> categoryStore)
         {
             _logger = logger;
             _groceryStore = groceryStore;
+            _categoryStore = categoryStore;
         }
 
         public IActionResult Index()
@@ -36,14 +38,50 @@ namespace TodoListApp.Controllers
                 return View("Index", items);            
             }
 
-            var filteredItems = items.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
+            var lowerCaseSearchTerm = searchTerm.ToLower();
+
+            var filteredItems = items.Where(x =>
+                x.Name.ToLower().Contains(lowerCaseSearchTerm)
+                || x.Category.Name.ToLower().Contains(lowerCaseSearchTerm));
 
             return View("Index", filteredItems);
+        }
+
+        public IActionResult Sort(string sortBy, string orderBy)
+        {
+            var items = _groceryStore.GetAll();
+
+            if (sortBy == "CreatedAt")
+            {
+                if (orderBy == "Asc")
+                {
+                    items = items.OrderBy(x => x.CreatedAt);
+                } 
+                else if (orderBy == "Desc")
+                {
+                    items = items.OrderByDescending(x => x.CreatedAt);
+                }                
+            } 
+            else if (sortBy == "Price")
+            {
+                if (orderBy == "Asc")
+                {
+                    items = items.OrderBy(x => x.Price);
+                }
+                else if (orderBy == "Desc")
+                {
+                    items = items.OrderByDescending(x => x.Price);
+                }
+            }            
+
+            return View("Index", items);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Categories = _categoryStore.GetAll();
+
             return View();
         }    
         
@@ -55,7 +93,7 @@ namespace TodoListApp.Controllers
                 CategoryId = model.CategoryId,
                 Name = model.Name,
                 Price = model.Price,                  
-                CreatedAt = DateTimeOffset.Now,
+                CreatedAt = DateTimeOffset.UtcNow,
                 IsCompleted = false
             };
             
@@ -74,6 +112,8 @@ namespace TodoListApp.Controllers
                 ViewBag.ErrorMessage = $"An item with the id { id } was not found";
                 return View("NotFound");
             }
+
+            ViewBag.Categories = _categoryStore.GetAll();
 
             return View(item);
         }

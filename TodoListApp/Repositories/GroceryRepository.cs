@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TodoListApp.Contexts;
@@ -17,12 +18,14 @@ namespace TodoListApp.Repositories
 
         public IEnumerable<Grocery> GetAll()
         {
-            return _db.Groceries;
+            return _db.Groceries.Include(x => x.Category);
         }
 
         public Grocery Get(int id)
         {
-            return _db.Groceries.FirstOrDefault(x => x.Id == id);
+            return _db.Groceries
+                .Include(x => x.Category)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public void Add(Grocery item)

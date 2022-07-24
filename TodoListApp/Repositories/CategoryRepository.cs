@@ -21,7 +21,7 @@ namespace TodoListApp.Repositories
 
         public void Delete(Category item)
         {
-            throw new System.NotImplementedException();
+            _db.Categories.Remove(item);
         }
 
         public void DeleteRange(IEnumerable<Category> items)
@@ -31,12 +31,12 @@ namespace TodoListApp.Repositories
 
         public Category Get(int id)
         {
-            throw new System.NotImplementedException();
+            return _db.Categories.Find(id);
         }
 
         public IEnumerable<Category> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _db.Categories;
         }
 
         public void Update(Category item)

@@ -16,7 +16,7 @@ namespace TodoListApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(_categoryStore.GetAll());
         }
 
         [HttpGet]
@@ -31,12 +31,12 @@ namespace TodoListApp.Controllers
             var category = new Category
             {
                 Name = model.Name,
-                CreatedAt = DateTimeOffset.Now
+                CreatedAt = DateTimeOffset.UtcNow
             };
 
             _categoryStore.Add(category);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Category");
         }
     }
 }
