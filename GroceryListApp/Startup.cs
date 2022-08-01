@@ -24,13 +24,21 @@ namespace TodoListApp
 
         public IConfiguration Configuration { get; }
 
+        string GetRemoteConnectionString()
+        {
+            string databaseUrl = Configuration["DATABASE_URL"]; 
+            Uri uri = new(databaseUrl);
+            return $"host={uri.Host};username={uri.UserInfo.Split(':')[0]};password={uri.UserInfo.Split(':')[1]};database={uri.LocalPath.Substring(1)};pooling=true;SSL Mode=Require;Trust Server Certificate=True;";
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("localSqlServerConnection"));
+                //options.UseSqlServer(Configuration.GetConnectionString("localSqlServerConnection"));            
+                options.UseNpgsql(GetRemoteConnectionString());
             });
             services.AddTransient<IRepository<Grocery>, GroceryRepository>();
             services.AddTransient<IRepository<Category>, CategoryRepository>();

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoListApp", "TodoListApp\TodoListApp.csproj", "{E97F6949-1870-4C01-A574-62B0AD6BEA8C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LessonNotes", "LessonNotes", "{1454FF5D-E9E4-4AFA-8D20-C50FE5EBD7D5}"
 	ProjectSection(SolutionItems) = preProject
 		Lesson2.txt = Lesson2.txt
@@ -13,16 +11,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LessonNotes", "LessonNotes"
 		Lesson7.txt = Lesson7.txt
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroceryListApp", "GroceryListApp\GroceryListApp.csproj", "{4E5533BD-2FDA-48C9-BC39-6879936DDFC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E97F6949-1870-4C01-A574-62B0AD6BEA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E97F6949-1870-4C01-A574-62B0AD6BEA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E97F6949-1870-4C01-A574-62B0AD6BEA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E97F6949-1870-4C01-A574-62B0AD6BEA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5533BD-2FDA-48C9-BC39-6879936DDFC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5533BD-2FDA-48C9-BC39-6879936DDFC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5533BD-2FDA-48C9-BC39-6879936DDFC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5533BD-2FDA-48C9-BC39-6879936DDFC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

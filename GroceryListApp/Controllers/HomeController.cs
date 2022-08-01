@@ -53,25 +53,27 @@ namespace TodoListApp.Controllers
 
             if (sortBy == "CreatedAt")
             {
-                if (orderBy == "Asc")
+                items = orderBy == "Asc" ? items.OrderBy(x => x.CreatedAt) : items.OrderByDescending(x => x.CreatedAt);
+                /*if (orderBy == "Asc")
                 {
                     items = items.OrderBy(x => x.CreatedAt);
                 } 
                 else if (orderBy == "Desc")
                 {
                     items = items.OrderByDescending(x => x.CreatedAt);
-                }                
+                }*/            
             } 
             else if (sortBy == "Price")
             {
-                if (orderBy == "Asc")
+                items = orderBy == "Asc" ? items.OrderBy(x => x.Price) : items.OrderByDescending(x => x.Price);
+                /*if (orderBy == "Asc")
                 {
                     items = items.OrderBy(x => x.Price);
                 }
                 else if (orderBy == "Desc")
                 {
                     items = items.OrderByDescending(x => x.Price);
-                }
+                }*/
             }            
 
             return View("Index", items);
